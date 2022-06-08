@@ -37,3 +37,24 @@ func InsertionSort(elements ...int) []int {
 
 	return elements
 }
+
+// SelectionSort sorts a list of integers in ascending order.
+func SelectionSort(elements ...int) []int {
+	if elements == nil || len(elements) == 0 {
+		return []int{}
+	}
+
+	length := len(elements)
+
+	for i := 0; i < length-1; i++ {
+		smallest := i
+		for j := i + 1; j < length; j++ {
+			if elements[smallest] > elements[j] {
+				smallest = j
+			}
+		}
+		elements[i], elements[smallest] = elements[smallest], elements[i]
+	}
+
+	return elements
+}
