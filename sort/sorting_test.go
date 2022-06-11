@@ -48,6 +48,18 @@ func TestSelectionSort(t *testing.T) {
 	}
 }
 
+func TestMergeSort(t *testing.T) {
+	expected := []int{1, 2, 3, 4, 5, 5, 7, 8, 9}
+	s := []int{3, 5, 2, 1, 5, 7, 8, 4, 9}
+	mysort.MergeSort(s...)
+
+	for i := 0; i < len(expected); i++ {
+		if s[i] != expected[i] {
+			t.Fatalf("Response not matching, expected : %v, got : %v", expected[i], s[i])
+		}
+	}
+}
+
 func TestCustomInsertionSort(t *testing.T) {
 	people := []Person{
 		{"John", 31},

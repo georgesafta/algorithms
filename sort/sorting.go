@@ -58,3 +58,52 @@ func SelectionSort(elements ...int) []int {
 
 	return elements
 }
+
+// MergeSort sorts a list of integers in ascending order.
+func MergeSort(elements ...int) {
+	if elements == nil || len(elements) == 0 {
+		return
+	}
+
+	mergeSort(0, len(elements)-1, elements...)
+}
+
+func mergeSort(startIndex, endIndex int, elements ...int) {
+	if startIndex < endIndex {
+		mid := startIndex + (endIndex-startIndex)/2
+		mergeSort(startIndex, mid, elements...)
+		mergeSort(mid+1, endIndex, elements...)
+		merge(startIndex, mid, endIndex, elements...)
+	}
+}
+
+func merge(startIndex, midIndex, endIndex int, elements ...int) {
+	firstPart := copy(startIndex, midIndex, elements)
+	secondPart := copy(midIndex+1, endIndex, elements)
+
+	for i, j, k := 0, 0, startIndex; k <= endIndex; k++ {
+		if i >= len(firstPart) {
+			elements[k] = secondPart[j]
+			j++
+		} else if j >= len(secondPart) {
+			elements[k] = firstPart[i]
+			i++
+		} else if firstPart[i] <= secondPart[j] {
+			elements[k] = firstPart[i]
+			i++
+		} else {
+			elements[k] = secondPart[j]
+			j++
+		}
+	}
+}
+
+func copy(start, end int, arr []int) []int {
+	size := end - start + 1
+	copy := make([]int, size)
+	for i, j := start, 0; i <= end; i, j = i+1, j+1 {
+		copy[j] = arr[i]
+	}
+
+	return copy
+}
