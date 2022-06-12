@@ -59,6 +59,25 @@ func SelectionSort(elements ...int) []int {
 	return elements
 }
 
+// BubbleSort sorts a list of integers in ascending order.
+func BubbleSort(elements ...int) []int {
+	if elements == nil || len(elements) == 0 {
+		return []int{}
+	}
+
+	length := len(elements)
+
+	for i := 0; i < length-1; i++ {
+		for j := length - 1; j > i; j-- {
+			if elements[j] < elements[j-1] {
+				elements[j], elements[j-1] = elements[j-1], elements[j]
+			}
+		}
+	}
+
+	return elements
+}
+
 // MergeSort sorts a list of integers in ascending order.
 func MergeSort(elements ...int) {
 	if elements == nil || len(elements) == 0 {

@@ -48,6 +48,17 @@ func TestSelectionSort(t *testing.T) {
 	}
 }
 
+func TestBubbleSort(t *testing.T) {
+	expected := []int{1, 2, 3, 4, 5, 5, 7, 8, 9}
+	sorted_list := mysort.BubbleSort(3, 5, 2, 1, 5, 7, 8, 4, 9)
+
+	for i := 0; i < len(expected); i++ {
+		if sorted_list[i] != expected[i] {
+			t.Fatalf("Response not matching, expected : %v, got : %v", expected[i], sorted_list[i])
+		}
+	}
+}
+
 func TestMergeSort(t *testing.T) {
 	expected := []int{1, 2, 3, 4, 5, 5, 7, 8, 9}
 	s := []int{3, 5, 2, 1, 5, 7, 8, 4, 9}
