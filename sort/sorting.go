@@ -1,5 +1,10 @@
 package sort
 
+import (
+	"fmt"
+	"math/rand"
+)
+
 type Comparable interface {
 	Compare(i, j int) int8
 	Len() int
@@ -87,6 +92,16 @@ func MergeSort(elements ...int) {
 	mergeSort(0, len(elements)-1, elements...)
 }
 
+// QuickSelect returns the element at the desired index in the sorted (ascending) list.
+// If the list is empty/nil or the index is outside the list, then an error is thrown.
+func QuickSelect(index int, elements ...int) (int, error) {
+	if elements == nil || len(elements) == 0 || index < 0 || index >= len(elements) {
+		return -1, fmt.Errorf("Bad input")
+	}
+
+	return quickSelect(index, 0, len(elements)-1, elements), nil
+}
+
 func mergeSort(startIndex, endIndex int, elements ...int) {
 	if startIndex < endIndex {
 		mid := startIndex + (endIndex-startIndex)/2
@@ -125,4 +140,37 @@ func copy(start, end int, arr []int) []int {
 	}
 
 	return copy
+}
+
+func quickSelect(index, start, end int, arr []int) int {
+	if start == end {
+		return arr[start]
+	}
+
+	pivotIndex := start + rand.Intn(end-start)
+	pivotIndex = partition(arr, start, end, pivotIndex)
+
+	if index == pivotIndex {
+		return arr[index]
+	}
+
+	if index < pivotIndex {
+		return quickSelect(index, start, pivotIndex-1, arr)
+	} else {
+		return quickSelect(index, pivotIndex+1, end, arr)
+	}
+}
+
+func partition(arr []int, left, right, pivotIndex int) int {
+	pivot := arr[pivotIndex]
+	arr[pivotIndex], arr[right] = arr[right], arr[pivotIndex]
+	for i := left; i < right-1; i++ {
+		if arr[i] < pivot {
+			arr[i], arr[left] = arr[left], arr[i]
+			left++
+		}
+	}
+	arr[right], arr[left] = arr[left], arr[right]
+
+	return left
 }

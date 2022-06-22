@@ -85,3 +85,32 @@ func TestCustomInsertionSort(t *testing.T) {
 		}
 	}
 }
+
+func TestQuickSelect(t *testing.T) {
+	value, err := mysort.QuickSelect(2)
+	if err == nil || err.Error() != "Bad input" {
+		t.Fatal("Expected bad input response")
+	}
+
+	empty := []int{}
+	value, err = mysort.QuickSelect(2, empty...)
+	if err == nil || err.Error() != "Bad input" {
+		t.Fatal("Expected bad input response")
+	}
+
+	s := []int{3, 5, 2, 1, 5, 7, 8, 4, 9}
+	value, err = mysort.QuickSelect(10, s...)
+	if err == nil || err.Error() != "Bad input" {
+		t.Fatal("Expected bad input response")
+	}
+
+	value, err = mysort.QuickSelect(-2, s...)
+	if err == nil || err.Error() != "Bad input" {
+		t.Fatal("Expected bad input response")
+	}
+
+	value, err = mysort.QuickSelect(2, s...)
+	if err != nil || value != 3 {
+		t.Fatalf("Response not matching, expected : %v, got : %v", 3, value)
+	}
+}
