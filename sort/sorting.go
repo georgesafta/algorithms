@@ -102,6 +102,14 @@ func QuickSelect(index int, elements ...int) (int, error) {
 	return quickSelect(index, 0, len(elements)-1, elements), nil
 }
 
+func QuickSort(elements ...int) {
+	if elements == nil || len(elements) < 2 {
+		return
+	}
+
+	quickSort(0, len(elements)-1, elements)
+}
+
 func mergeSort(startIndex, endIndex int, elements ...int) {
 	if startIndex < endIndex {
 		mid := startIndex + (endIndex-startIndex)/2
@@ -142,6 +150,17 @@ func copy(start, end int, arr []int) []int {
 	return copy
 }
 
+func quickSort(startIndex, endIndex int, arr []int) {
+	if startIndex >= endIndex || startIndex < 0 {
+		return
+	}
+
+	pivotIndex := partitionQS(arr, startIndex, endIndex)
+
+	quickSort(startIndex, pivotIndex-1, arr)
+	quickSort(pivotIndex+1, endIndex, arr)
+}
+
 func quickSelect(index, start, end int, arr []int) int {
 	if start == end {
 		return arr[start]
@@ -173,4 +192,21 @@ func partition(arr []int, left, right, pivotIndex int) int {
 	arr[right], arr[left] = arr[left], arr[right]
 
 	return left
+}
+
+func partitionQS(arr []int, left, right int) int {
+	pivot := arr[right]
+	i := left - 1
+
+	for j := left; j < right; j++ {
+		if arr[j] <= pivot {
+			i++
+			arr[j], arr[i] = arr[i], arr[j]
+		}
+	}
+
+	i++
+	arr[right], arr[i] = arr[i], arr[right]
+
+	return i
 }

@@ -114,3 +114,15 @@ func TestQuickSelect(t *testing.T) {
 		t.Fatalf("Response not matching, expected : %v, got : %v", 3, value)
 	}
 }
+
+func TestQuickSort(t *testing.T) {
+	expected := []int{1, 2, 3, 4, 5, 5, 7, 8, 9}
+	s := []int{3, 5, 2, 1, 5, 7, 8, 4, 9}
+	mysort.QuickSort(s...)
+
+	for i := 0; i < len(expected); i++ {
+		if s[i] != expected[i] {
+			t.Fatalf("Response not matching, expected : %v, got : %v", expected[i], s[i])
+		}
+	}
+}
